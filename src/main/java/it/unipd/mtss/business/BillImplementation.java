@@ -29,7 +29,7 @@ public class BillImplementation implements Bill {
             }
         }
         double total = getProcessorPrice(map.get(EItem.itemType.PROCESSORI)) +
-                getPerifPrice(map.get(EItem.itemType.MOUSE),map.get(EItem.itemType.TASTIERE))+
+                getPerifPrice(map.get(EItem.itemType.MOUSE), map.get(EItem.itemType.TASTIERE))+
                 getMotherboardPrice(map.get(EItem.itemType.MOTHERBOARD));
         return total > 1000.0 ? total * 0.9 : total < 10.0 && total != 0.0 ? total + 2 : total;
     }
@@ -42,12 +42,6 @@ public class BillImplementation implements Bill {
             processList.stream().min(Comparator.comparing((EItem x) -> x.getPrice())).get().discount(0.5);
         }
         return processList.stream().map((x) -> x.getPrice()).reduce(0.0, (a,b) -> a+b);
-    }
-    double getMotherboardPrice(List<EItem> motherboardlist){
-        if(motherboardlist == null || motherboardlist.size() == 0){
-            return 0.0;
-        }
-        return motherboardlist.stream().map((x) -> x.getPrice()).reduce(0.0, (a,b) -> a+b);
     }
     double getPerifPrice(List<EItem> mouseList, List<EItem> keyboardList){
         ArrayList<EItem> Perif = new ArrayList<EItem>();
@@ -66,6 +60,12 @@ public class BillImplementation implements Bill {
             }
         }
         return Perif.stream().map((x) -> x.getPrice()).reduce(0.0, (a,b) -> a+b);
+    }
+    double getMotherboardPrice(List<EItem> motherboardlist){
+        if(motherboardlist == null || motherboardlist.size() == 0){
+            return 0.0;
+        }
+        return motherboardlist.stream().map((x) -> x.getPrice()).reduce(0.0, (a,b) -> a+b);
     }
 
 }
